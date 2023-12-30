@@ -22,7 +22,7 @@ import sys
 import pandas as pd 
 import re
 import pickle
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData
 from scipy.stats import gmean
 from matplotlib import pyplot as plt
 
@@ -31,6 +31,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
+nltk.download('omw-1.4')
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -63,8 +64,11 @@ def load_data(database_filepath):
             Category names.
     """
     # load data from database
-    engine = create_engine('sqlite:///DisasterResDB.db')
-    df = pd.read_sql_table("DisasterResTable", engine)
+    engine = create_engine(f'sqlite:///{database_filepath}')
+    df = pd.read_sql_table(
+        "disrestable", 
+        engine
+    )
     
     # Further cleaning as introduced in the Python Notebook
     df = df.drop("child_alone", axis = 1)
@@ -106,11 +110,9 @@ def tokenize(text):
     
     # Lemmy, lower, strip them (this sounds weird to say.... God forgive me)
     lemmy = WordNetLemmatizer()
-    clean_tokens = []
+    lemmed_tokens = [lemmy.lemmatize(token) for token in tokens]
+    clean_tokens = [token.lower().strip() for token in lemmed_tokens]
     
-    for token in tokens:
-        clean_tokens.append(lemmy.lemmatize(token).lower().strip())
-        
     return clean_tokens
 
 

@@ -89,12 +89,12 @@ def clean_data(df):
         columns = ["categories"]
     )
     
-    df = df.drop_duplicates()
-    
     df = pd.concat(
         objs = [df, categories],
         axis = 1
     )
+
+    df = df.drop_duplicates()
     
     return df
 
@@ -111,9 +111,8 @@ def save_data(df, database_filename):
             Path to the SQLite destination database.
     """
     engine = create_engine(f'sqlite:///{database_filename}')
-    print(database_filename.replace("DB.db", "Table"))
     df.to_sql(
-        database_filename.replace("DB.db", "Table"), 
+        "disrestable", 
         engine, 
         index = False,
         if_exists = "replace"

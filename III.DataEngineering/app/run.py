@@ -1,4 +1,5 @@
 import json
+import os
 import plotly
 import pandas as pd
 
@@ -8,7 +9,7 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+import joblib
 from sqlalchemy import create_engine
 
 
@@ -26,11 +27,16 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/DisasterResDB.db')
-df = pd.read_sql_table('DisasterResTable', engine)
+db_path = os.path.join(os.path.dirname(__file__), "..", "data", "disresdb.db")
+engine = create_engine(f'sqlite:///{db_path}')
+df = pd.read_sql_table(
+    "disrestable", 
+    engine
+)
 
 # load model
-model = joblib.load("../models/best_model.pkl")
+model_path = os.path.join(os.path.dirname(__file__), "..", "models", "best_model.pkl")
+model = joblib.load(model_path)
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -39,7 +45,6 @@ model = joblib.load("../models/best_model.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby("genre").count()["message"]
     genre_names = list(genre_counts.index)
     
@@ -49,7 +54,6 @@ def index():
     categories_counts = categories.sum()
     
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         # Graph 1 - Genre counts
         {

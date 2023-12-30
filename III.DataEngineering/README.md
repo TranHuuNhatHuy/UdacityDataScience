@@ -29,10 +29,12 @@ This project is divided in the following key sections:
 
 ## Installation
 
-1. From root folder, run `pip install -r requirements.txt` to install all dependencies.
-2. ETL pipeline: `python ./data/process_data.py disaster_messages.csv disaster_categories.csv DisasterResDB.db`.
-3. Model training, evaluation and acquisition: `python ./models/python train_classifier.py DisasterResDB.db best_model.pkl`.
-4. Run the app: `python ./app/python run.py`.
+1. From repo folder, run `pip install -r requirements.txt` to install all dependencies.
+2. ETL pipeline:
+    - From repo folder run `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/disresdb.db`.
+3. Model training, evaluation and acquisition:
+    - From repo folder run `python models/train_classifier.py data/disresdb.db models/best_model.pkl`.
+4. Run the app: `python app/run.py`.
 5. Go to http://0.0.0.0:3001/.
 6. Enjoy.
 
@@ -60,4 +62,4 @@ The following Python libraries are used in this analysis:
 
 ## Acknowledgements
 
-- Data source: [Appen's Disaster Response Data](https://appen.com/blog/combined-disaster-response-data/)
+- Data source: [Appen's Disaster Response Data](https://appen.com/blog/combined-disaster-response-data/)`
