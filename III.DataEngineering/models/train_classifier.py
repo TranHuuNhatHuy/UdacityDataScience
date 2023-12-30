@@ -70,13 +70,6 @@ def load_data(database_filepath):
         engine
     )
     
-    # Further cleaning as introduced in the Python Notebook
-    df = df.drop("child_alone", axis = 1)
-    df.loc[
-        df["related"] == 2,
-        "related"
-    ] = 1
-    
     # Extract data for training
     X = df["message"]
     Y = df.iloc[ : , 4 : ]

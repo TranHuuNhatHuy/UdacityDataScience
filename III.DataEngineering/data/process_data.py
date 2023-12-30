@@ -94,6 +94,15 @@ def clean_data(df):
         axis = 1
     )
 
+    # Drop `child_alone` since it only contains 0, which is useless
+    df = df.drop("child_alone", axis = 1)
+
+    # Drop those rows that "related" == 2 since they might be just trashes or outliers
+    df = df[
+        df["related"] != 2
+    ]
+
+    # Drop duplicates, finally
     df = df.drop_duplicates()
     
     return df
