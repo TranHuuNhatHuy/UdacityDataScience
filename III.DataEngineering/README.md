@@ -52,6 +52,11 @@ The following Python libraries are used in this analysis:
 - SQLAlchemy
     - SQLAlchemy==1.4.25
 
+## Demo
+
+![Homepage](./assets/homepage.png)
+
+![Demo](./assets/test.png)
 
 ## Acknowledgements
 
